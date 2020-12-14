@@ -2,7 +2,6 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const helmet = require('helmet')
-const cors = require('cors')
 const MemoryStore = require("memorystore")(session);
 const app = express();
 
