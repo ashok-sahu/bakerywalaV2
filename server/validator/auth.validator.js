@@ -1,22 +1,55 @@
-const { check, validationResult } = require('express-validator');
+const { check, validationResult } = require("express-validator");
 
-exports.validateUserRegister = [
-  check("name").notEmpty().withMessage("name is required!"),
-  check("email").isEmail().withMessage("email is not valid"),
+exports.validSignUp = [
+  check("name", "Name is required")
+    .notEmpty()
+    .isLength({
+      min: 4,
+      max: 32,
+    })
+    .withMessage("name must be between 3 to 32 characters"),
+  check("email").isEmail().withMessage("Must be a valid email address"),
+  check("password", "password is required").notEmpty(),
   check("password")
-    .isLength({ min: 6 })
-    .withMessage("password must be more than 6 characters!"),
+    .isLength({
+      min: 6,
+    })
+    .withMessage("Password must contain at least 6 characters")
+    .matches(/\d/)
+    .withMessage("password must contain a number"),
 ];
-exports.validateUserSignInRequest = [
-    check("email").isEmail().withMessage("email not valid"),
-    check("password")
-      .isLength({ min: 6 })
-      .withMessage("password must be more than 6 characters!"),
-  ];
-exports.isRequestValidated = (req,res,next)=>{
-    const errors = validationResult(req)
-    if(errors.array().length>0){
-        return res.status(400).json({error:errors.array()[0].msg})
-    }
-    next()
-}
+
+exports.validLogin = [
+  check("email").isEmail().withMessage("Must be a valid email address"),
+  check("password", "password is required").notEmpty(),
+  check("password")
+    .isLength({
+      min: 6,
+    })
+    .withMessage("Password must contain at least 6 characters")
+    .matches(/\d/)
+    .withMessage("password must contain a number"),
+];
+
+exports.forgotPasswordValidator = [
+  check("email")
+    .not()
+    .isEmpty()
+    .isEmail()
+    .withMessage("Must be a valid email address"),
+];
+
+exports.resetPasswordValidator = [
+  check("newPassword")
+    .not()
+    .isEmpty()
+    .isLength({ min: 6 })
+    .withMessage("Password must be at least  6 characters long"),
+];
+exports.isRequestValidated = (req, res, next) => {
+  const errors = validationResult(req);
+  if (errors.array().length > 0) {
+    return res.status(400).json({ error: errors.array()[0].msg });
+  }
+  next();
+};

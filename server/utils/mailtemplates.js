@@ -26,13 +26,22 @@ exports.confirmResetPasswordEmail = () => {
 
 exports.signupEmail = (token) => {
   const message = {
-      subject: 'Account Activation Link',
-      text: `Hi ${token}! Thank you for creating an account with us!.`,
-      html:`<h1 > Please Click The Link To Active </h1>
+    subject: "Account Activation Link",
+    text: `Hi ${token}! Thank you for creating an account with us!.`,
+    html: `<h1 > Please Click The Link To Active </h1>
       <hr/>
-      <a>${process.env.CLIENT_URI}/users/activate/${token} </a>
+      <p>${process.env.CLIENT_URI}/users/activate/${token} </p>
       <p>This Email contains Sensetive Info</p>
-      <p>${process.env.CLIENT_URI}</p>`
+      <p>${process.env.CLIENT_URI}</p>`,
+  };
+  return message;
+};
+
+exports.loginSuccess = (data) => {
+  const message = {
+    subject: "Welcome To Bakerywala",
+    text: `Hi ${data}! Thank you for your Interest In our Shop`,
+    html: `<b style={color:'red'}>${data}</b>`,
   };
   return message;
 };

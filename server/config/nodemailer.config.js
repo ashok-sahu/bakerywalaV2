@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-// const hbs = require("nodemailer-handlebars");
+const path = require('path')
 
 exports.sendEmail = (recipient, message) => {
   let transporter = nodemailer.createTransport({
@@ -15,14 +15,6 @@ exports.sendEmail = (recipient, message) => {
     },
   });
 
-//   transporter.use(
-//     "compile",
-//     hbs({
-//       viewEngine: "express-handlebars",
-//       viewPath: './views/',
-//     })
-//   );
-
   const data = {
     from: `Bakerywala.com <${process.env.NODEMAILER_SENDER_MAIL}>`,
     to: recipient,
@@ -30,18 +22,13 @@ exports.sendEmail = (recipient, message) => {
     text: `${message.text}`,
     html: `${message.html}`,
     // attachments: [
-    //     { filename: 'images/profile.JPG', path: 'images/profile.JPG' } // TODO: replace it with your own image
+    //     { filename: 'images/1.JPG', path: path.resolve(__dirname,'../images/1.jpg') } 
     // ],
-    // template: 'index',
-    // context: {
-    //     name: 'Accime Esterling'
-    // }
   };
 
   transporter.sendMail(data, (error, info) => {
     if (error) {
       return console.log(error);
     }
-    console.log("Message %s sent: %s", info.messageId, info.response);
   });
 };
