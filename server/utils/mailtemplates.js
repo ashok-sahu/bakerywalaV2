@@ -24,6 +24,23 @@ exports.confirmResetPasswordEmail = () => {
   return message;
 };
 
+exports.forgotPassword = (token) => {
+  const message = {
+    subject: "Password Reset link",
+    text:
+      `You are receiving this email because you changed your password. \n\n` +
+      `If you did not request this change, please contact us immediately.`,
+    html: `
+    <h1>Please use the following link to reset your password</h1>
+    <p>${process.env.CLIENT_URI}/users/password/reset/${token}</p>
+    <hr />
+    <p>This email may contain sensetive information</p>
+    <p>${process.env.CLIENT_URI}</p>
+      `,
+  };
+  return message
+};
+
 exports.signupEmail = (token) => {
   const message = {
     subject: "Account Activation Link",

@@ -2,11 +2,15 @@ const router = require("express").Router();
 const {
   registerUser,
   activateUser,
-  signIn
+  signIn,
+  forgetPassword,
+  resetPassword
 } = require("../../controllers/auth.controller");
 const {
   validSignUp,
   validLogin,
+  forgotPasswordValidator,
+  resetPasswordValidator,
   isRequestValidated,
 } = require("../../validator/auth.validator");
 const { setHeaders } = require("../../middlewares/headers");
@@ -20,5 +24,7 @@ router.post(
 )
 .post("/active",setHeaders,activateUser)
 .post("/login",setHeaders,validLogin,isRequestValidated,signIn)
+.put("/forgotPassword",forgotPasswordValidator,isRequestValidated,forgetPassword)
+.put("/resetPassword",resetPasswordValidator,isRequestValidated,resetPassword)
 
 module.exports = router;

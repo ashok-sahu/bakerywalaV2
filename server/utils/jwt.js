@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const createError = require("../helpers/createError");
 
-const generateToken = (id) =>{
-  return jwt.sign( id , process.env.JWT_SECRET, {
-    expiresIn: '30d',
+const generateToken = (id,token,expiry) =>{
+  return jwt.sign( id , token?token:process.env.JWT_SECRET, {
+    expiresIn: expiry?expiry:'30d',
   })
 }
 

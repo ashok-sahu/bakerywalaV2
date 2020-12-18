@@ -28,6 +28,10 @@ const prepareTemplate = (type, host, data,token) => {
       message = template.loginSuccess(data);
       break;
 
+    case 'forgotPassword':
+      message = template.forgotPassword(token);
+      break;
+
     case 'reset-confirmation':
       message = template.confirmResetPasswordEmail();
       break;
